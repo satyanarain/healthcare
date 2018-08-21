@@ -3,8 +3,12 @@ import React, { Component } from 'react';
 import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground,} from 'react-native';
 import {  createStackNavigator, } from 'react-navigation';
 import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker'
 class Login extends Component {
-
+  static navigationOptions = {
+  header: { visible:false },
+  title: 'Welcome',
+  };
 
 constructor(props) {
  super();
@@ -13,7 +17,7 @@ constructor(props) {
      UserEmail: '',
      UserPassword: '',
       isVisible : true,
-      date:"2016-05-15"
+      date:"2018-08-20"
    }
 //this.state = {date:"2016-05-15"}
  }
@@ -116,25 +120,26 @@ render() {
 return (
   <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('../assets/background.png')}>
 <View style={styles.container}>
-<Image  source={require('../assets/logo.png')}/>
+<Image  source={require('../assets/logo.png')} style={{marginBottom:40,marginTop:30}}/>
 
-<View style={styles.SectionStyle}>
+<View style={styles.SectionStyle1}>
   <Image source={require('../assets/user_icon.png')} style={styles.ImageStyle} />
   <TextInput
-              style={{flex:1}}
+              style={{flex:1,width: 100,backgroundColor: '#ede9e0'}}
               placeholder="Member ID"
               underlineColorAndroid="transparent"
           />
 
 </View>
 <View style={styles.SectionStyle}>
-  <Image source={require('../assets/cal.png')} style={styles.ImageStyle} />
+  <Image source={require('../assets/cal.png')} style={styles.ImageStyle_birth} />
   <DatePicker
-     style={{width: 300,backgroundColor: '#ede9e0'}}
+     style={{width: 267,backgroundColor: '#ede9e0'}}
      customStyles={{
    dateInput: {
      alignItems: 'flex-start',
      borderWidth: 0,
+
 
    },
    dateText:{
@@ -151,7 +156,7 @@ return (
      mode="date"
      placeholder="Select date"
      format="YYYY-MM-DD"
-     minDate="2016-05-01"
+     minDate="1900-05-01"
      maxDate="2020-12-12"
      confirmBtnText="OK"
      cancelBtnText="Cancel"
@@ -162,7 +167,13 @@ return (
 
 
 
-  <Button title="Click Here To Login" onPress={this.UserLoginFunction} color="#2196F3" />
+<TouchableOpacity style={styles.FacebookStyle} activeOpacity={0.5}>
+
+        <Image
+         source={require('../assets/login.png')}
+         style={{width:267,marginTop:10,}}
+         />
+  </TouchableOpacity>
 {
                   (this.state.isVisible === true) ? Splash_Screen : null
                 }
@@ -172,21 +183,26 @@ return (
  }
 }
 /*********************Second login**************************************************************************************/
-
 // Creating Profile activity.
-
-
-
 /**************navigate start*************************************************************************************/
 export default MainProject = createStackNavigator(
 {
   First: { screen: Login },
 },
 {
-  headerMode: 'none',
+  headerMode: 'screen',
   navigationOptions: {
-    headerVisible: false,
-      visible: false,
+  header: { visible: false },
+ Login : {
+     screen: Login,
+     navigationOptions: {
+       header: null,
+     }
+   },
+    // headerVisible: false,
+    //   visible: false,
+    //   title: 'Login',
+    //   header: null //this will hide the header
   }
  }
 
@@ -204,6 +220,7 @@ const styles = StyleSheet.create({
           marginTop: 25,
           paddingTop:0,
           alignItems: 'center',
+
           //justifyContent: 'center',
         //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
       },
@@ -223,6 +240,17 @@ backgroundColor:'blue',
         resizeMode : 'stretch',
         alignItems: 'center'
     },
+    ImageStyle_birth: {
+        padding: 10,
+        marginLeft: 5,
+        paddingLeft:20,
+        height: 25,
+        width: 25,
+        resizeMode : 'stretch',
+        alignItems: 'center'
+    },
+
+
     SectionStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -232,12 +260,27 @@ backgroundColor:'blue',
         borderColor: '#ede9e0',
         height: 40,
         borderRadius: 5 ,
-        margin: 10
+        margin: 10,
+        width: 267,
+          paddingLeft:40,
+    },
+
+    SectionStyle1: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ede9e0',
+        borderWidth: .5,
+        borderColor: '#ede9e0',
+        height: 40,
+        borderRadius: 5 ,
+        margin: 10,
+        width: 267,
     },
 
 textInput:
     {
-        height: 50,
+        height: 40,
         borderWidth: 1,
         marginVertical: 5,
         alignSelf: 'stretch',
@@ -246,7 +289,7 @@ textInput:
         backgroundColor: '#ede9e0',
         color: '#ede9e0',
         borderColor:'#ede9e0',
-        width: 300,
+        width: 267,
         margin:30,
 
     },
