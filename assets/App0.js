@@ -3,9 +3,7 @@ import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, Toucha
 import {  createStackNavigator, } from 'react-navigation';
 import DatePicker from 'react-native-datepicker';
 import styled from 'styled-components';
-//import Telemedicine from './Telemedicine';
 //import  Home  from './src/Home';
-
 import BottomNavigation, {
   IconTab,
   Badge
@@ -19,10 +17,10 @@ constructor(props) {
        UserEmail: '',
        UserPassword: '',
         isVisible : true,
-        Login:false,
-        date:null
+
+        date:"2018-08-20"
      }
-//this.state = {date:"2016-05-15"}
+  //this.state = {date:"2016-05-15"}
    }
 
   Hide_Splash_Screen=()=>{
@@ -34,34 +32,22 @@ constructor(props) {
 
     }
  static navigationOptions = { title: 'Welcome', header: null,  navigationBarHidden: true};
-/***********************************************************/
     componentDidMount(){
-    var that = this;
-    setTimeout(function(){
+
+      var that = this;
+
+      setTimeout(function(){
 
         that.Hide_Splash_Screen();
 
       }, 5000);
 
-      setTimeout(() => {this.setState({Login: true})}, 4000);
-   }
+
+
+    }
 
   render() {
     const { navigate } = this.props.navigation;
-    const {
-       Login
-     } = this.state;
-
-     // const = {
-     //   data,
-     //   meta
-     // } = this.props;
-
-
-
-
-
-
     let Splash_Screen = (
 
                 <View style={styles.SplashScreen_RootView}>
@@ -91,102 +77,132 @@ constructor(props) {
 
 
     return (
-      <View style = { styles.MainContainer } className={this.state.visible}>
+
+        <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('./assets/background.png')}>
+      <View style={styles.container}>
+      <Image  source={require('./assets/logo.png')} style={{marginBottom:40,marginTop:100}}/>
+
+      <View style={styles.SectionStyle1}>
+        <Image source={require('./assets/user_icon.png')} style={styles.ImageStyle} />
+        <TextInput
+                    style={{flex:1,width: 100,backgroundColor: '#ede9e0'}}
+                    placeholder="Member ID"
+                    underlineColorAndroid="transparent"
+                />
+
+      </View>
+      <View style={styles.SectionStyle}>
+        <Image source={require('./assets/cal.png')} style={styles.ImageStyle_birth} />
+        <DatePicker
+           style={{width: 267,backgroundColor: '#ede9e0'}}
+           customStyles={{
+         dateInput: {
+           alignItems: 'flex-start',
+           borderWidth: 0,
+          },
+         dateText:{
+          // textAlign: 'left',
+           fontSize: 18,
+           color: '#000',
+              paddingLeft:0
+         }
+       }}
+           showIcon={false}
+           //customStyles={customStyles}
+            ref='datepicker'
+           date={this.state.date}
+           mode="date"
+           placeholder="Select date"
+           format="YYYY-MM-DD"
+           minDate="1900-05-01"
+           maxDate="2020-12-12"
+           confirmBtnText="OK"
+           cancelBtnText="Cancel"
+
+           onDateChange={(date) => {this.setState({date: date})}}   />
+
+      </View>
+  <TouchableOpacity style={styles.FacebookStyle} activeOpacity={0.5}         onPress={() => navigate('Home')}>
+      <Image
+               source={require('./assets/login.png')}
+               style={{width:267,marginTop:10,}}
+               />
+        </TouchableOpacity>
       {
-            Login &&
-                    <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('./assets/background.png')}>
-                    <View style={styles.container}>
-                    <Image  source={require('./assets/logo.png')} style={{marginBottom:65,marginTop:100}}/>
-
-                    <View style={styles.SectionStyle1}>
-                      <Image source={require('./assets/user_icon.png')} style={styles.ImageStyle} />
-                      <TextInput
-                                  style={{flex:1,width: 100}}
-                                  placeholder="Member ID"
-                                  placeholderTextColor="#000"
-                                  underlineColorAndroid="transparent"
-                              />
-
-                    </View>
-                    <View style={styles.SectionStyle}>
-                      <Image source={require('./assets/cal.png')} style={styles.ImageStyle_birth} />
-                      <DatePicker
-                         style={{width: 267,backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
-                         customStyles={{
-                       dateInput: {
-                         alignItems: 'flex-start',
-                         borderWidth: 0,
-
-                        },
-
-                        placeholderText: {
-                          color: '#000'
-                        },
-                       dateText:{
-                        // textAlign: 'left',
-
-                         color: '#000',
-                            paddingLeft:0,
-
-
-                       }
-                     }}
-                         showIcon={false}
-                         //customStyles={customStyles}
-                          ref='datepicker'
-                         date={this.state.date}
-                         mode="date"
-                         placeholder="Birthday"
-                         format="DD-MM-YYYY"
-                         minDate="1900-05-01"
-                         maxDate="2020-12-12"
-                         autoComplete="off"
-                         confirmBtnText="OK"
-                         cancelBtnText="Cancel"
-
-                         onDateChange={(date) => {this.setState({date: date})}}   />
-
-                    </View>
-                    <TouchableOpacity style={styles.FacebookStyle} activeOpacity={0.5}         onPress={() => navigate('Home')}>
-                    <Image
-                             source={require('./assets/login.png')}
-                             style={{width:267,marginTop:10,}}
-                             />
-                      </TouchableOpacity>
-                    {
-                                      (this.state.isVisible === true) ? Splash_Screen : null
-                                    }
-                    </View>
-                      </ImageBackground>
-                    }
-
-                      {
                         (this.state.isVisible === true) ? Splash_Screen : null
                       }
-
-
-                  </View>
-
-
-
-
+      </View>
+      </ImageBackground>
     );
   }
 }
 
 class HomeScreen extends React.Component {
+  state = {
+      activeTab: 'home'
+    }
+
+    tabs = [
+      {
+        key: 'games',
+        label: 'Games',
+        barColor: '#ff7417',
+        //pressColor: 'rgba(255, 255, 255, 0.16)',
+        icon: 'home'
+      },
+      {
+        key: 'movies-tv',
+        label: 'Movies & TV',
+        //barColor: '#00695C',
+        //pressColor: 'rgba(255, 255, 255, 0.16)',
+        icon: 'movie'
+      },
+      {
+        key: 'music',
+        label: 'Music',
+        //barColor: '#6A1B9A',
+        //pressColor: 'rgba(255, 255, 255, 0.16)',
+        icon: 'contacts'
+      },
+      {
+        key: 'books',
+        label: 'Books',
+        //barColor: '#1565C0',
+        //pressColor: 'rgba(255, 255, 255, 0.16)',
+        icon: 'book'
+      }
+    ]
+
+    state = {
+      activeTab: this.tabs[0].key
+    }
+
+    renderIcon = icon => ({ isActive }) => (
+      <Icon size={24} color="white" name={icon} />
+    )
+
+    renderTab = ({ tab, isActive }) => (
+      <IconTab
+        isActive={isActive}
+        showBadge={tab.key === 'movies-tv'}
+        renderBadge={() => <Badge>2</Badge>}
+        key={tab.key}
+        label={tab.label}
+        renderIcon={this.renderIcon(tab.icon)}
+      />
+  )
+
+
 
   render() {
-
     return (
-      <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('./assets/home-bac.png')}>
+      <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('./assets/background.png')}>
 
       <View style={{
               flex: 0.5,
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginTop:130,
-              marginBottom:20
+              marginTop:100
             }}>
               <View><Image  source={require('./assets/acc-info.png')} /></View>
               <View></View>
@@ -203,9 +219,9 @@ class HomeScreen extends React.Component {
             marginTop: 10,
 
           }}>
-            <View style={{marginLeft:8,}}><Image  source={require('./assets/appointments.png')} /></View>
+            <View><Image  source={require('./assets/appointments.png')} /></View>
             <View></View>
-            <View style={{marginRight:8,}}><Image  source={require('./assets/telemedicine.png')} /></View>
+            <View><Image  source={require('./assets/telemedicine.png')} /></View>
           </View>
 
           <View style={{
@@ -217,25 +233,20 @@ class HomeScreen extends React.Component {
                   <View><Image  source={require('./assets/customer-service.png')} /></View>
                   <View></View>
                 </View>
-                <View style={styles.shadow1}>
-                <Image  source={require('./assets/b.png')} />
+
+                <View>
+                      <BottomNavigation
+                          tabs={this.tabs}
+                          activeTab={this.state.activeTab}
+                          onTabPress={newTab => this.setState({ activeTab: newTab.key })}
+                          renderTab={this.renderTab}
+                          useLayoutAnimation
+                        />
                 </View>
-                <View style={{
-                        //flex: 1,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: 0,
-                        padding:10,
-                        backgroundColor:'#ffffff'
 
-                      }}>
-                        <View style={{marginLeft:8,}}><Image  source={require('./assets/home-active.png')} /></View>
-                        <View><Image  source={require('./assets/user.png')} /></View>
-                        <View><Image  source={require('./assets/notification.png')} /></View>
-                        <View style={{marginRight:8,}}><Image  source={require('./assets/list.png')} /></View>
-                      </View>
 
-</ImageBackground>
+
+    </ImageBackground>
     );
   }
 }
@@ -273,29 +284,12 @@ container: {
           //justifyContent: 'center',
         //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
       },
-      MainContainer:
-       {
-           flex: 1,
-           justifyContent: 'center',
-           alignItems: 'center',
-           paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
-       },
-
-
-
-
       container_logo: {
-              //  margin: 0,
-                marginBottom:20,
+                margin: 0,
                 padding:0,
                 alignItems: 'center',
             },
-          shadow1: {
-                    //  margin: 0,
-                      marginBottom:0,
-                      padding:0,
-                      alignItems: 'center',
-                  },
+
 
 
 container_home: {
@@ -303,8 +297,7 @@ container_home: {
   flex: 1,
   flexDirection: 'row',
   justifyContent: 'space-between',
-  alignItems:'flex-start',
-  marginTop:50,
+  alignItems:'flex-start'
 
 },
     imgBackground: {
@@ -317,18 +310,17 @@ container_home: {
     ImageStyle: {
         padding: 10,
         margin: 5,
-        height: 20,
-        width: 8,
+        height: 25,
+        width: 25,
         resizeMode : 'stretch',
         alignItems: 'center'
     },
     ImageStyle_birth: {
         padding: 10,
         marginLeft: 5,
-        marginRight: 5,
-        //paddingLeft:10,
-        height: 20,
-        width: 20,
+        paddingLeft:20,
+        height: 25,
+        width: 25,
         resizeMode : 'stretch',
         alignItems: 'center'
     },
@@ -351,29 +343,23 @@ container_home: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: '#0f0',
+        backgroundColor: '#ede9e0',
         borderWidth: .5,
-        borderColor: '#ffa970',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-
+        borderColor: '#ede9e0',
         height: 40,
         borderRadius: 5 ,
         margin: 20,
         width: 267,
-        paddingLeft:40,
-        shadowOffset:{  width: 5,  height: 5,  },
-        borderWidth: 1,
-
+          paddingLeft:40,
     },
 
     SectionStyle1: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-
+        backgroundColor: '#ede9e0',
         borderWidth: .5,
-        borderColor: '#ffa970',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        borderColor: '#ede9e0',
         height: 40,
         borderRadius: 5 ,
         margin: 10,
