@@ -24,7 +24,6 @@ constructor(props) {
      }
 //this.state = {date:"2016-05-15"}
    }
-
   Hide_Splash_Screen=()=>{
 
       this.setState({
@@ -200,7 +199,7 @@ class HomeScreen extends React.Component {
                 <View style={styles.shadow1}>
                 <Image  source={require('./assets/b.png')} />
                 </View>
-                
+
                 <View style={{
                         //flex: 1,
                         flexDirection: 'row',
